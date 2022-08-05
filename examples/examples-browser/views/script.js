@@ -1,23 +1,6 @@
 const video = document.getElementById("video");
 var mBlinkSound = new Audio("/sound/shotgun-firing1.mp3");
 
-// const mysql = require("mysql");
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "password",
-//   port: 3306,
-//   database: "hackathon2022",
-// });
-
-// Connecting MYSQL
-// db.connect((err) => {
-//   if (err) {
-//     throw err;
-//   }
-//   console.log("MSQL CONNECTED ");
-// });
-
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri("/facemodels"),
   faceapi.nets.faceLandmark68Net.loadFromUri("/facemodels"),
@@ -60,16 +43,25 @@ function startVideo() {
   // document.body.appendChild(div)
 }
 function getFrequency() {
+  // document.getElementById("frequency_count").innerHTML =
+  //   "Your eye blink frequency is 27 seconds and Your eye health status is Strained!";
+
   let URL = "/eye_blink_frequency";
   let req = new XMLHttpRequest();
-  req.onreadystatechange = function () {
+  req.onreadystatechange = () => {
     if (req.readyState == 4 && req.status == 200) {
-      const y = JSON.parse(
-        req.responseText
-      ).result;
-      const str = checkEyeHealth(y);
-      document.getElementById("frequency_count").innerHTML = y + "- Your Eye health is " + str;
-
+      const y = JSON.parse(req.responseText).result;
+      let str = "";
+      const x = Number.parseInt(Math.floor(y));
+      if (x <= 10) {
+        str = "normal";
+      } else if (x <= 25) {
+        str = "strained";
+      } else if (x > 25) {
+        str = "critical";
+      }
+      document.getElementById("frequency_count").innerHTML =
+        y + "- Your Eye health is " + str;
       console.log(JSON.parse(req.responseText));
     }
   };
@@ -269,29 +261,5 @@ video.addEventListener("play", () => {
     }
     //ctx.fillText("FPS:"+ (t2-t1), 10, 50);
     t1 = t2;
-
-  }, 33)
-  
-  
-  const normalBlink = 15;
-  const abnormalBlink = 25 ;
-  var resultText = "";
-  function checkEyeHealth(EyeBlinkCountFrequency){
-    const x = Number.parseInt(Math.floor(EyeBlinkCountFrequency));
-    if(x<=normalBlink){
-      return "normal"
-    }
-
-    else if(x<=abnormalBlink){
-      return "strained"
-    }
-
-    else if(x>abnormalBlink){
-      return "critical"
-    }
-  }
-  
-
-  
-
-})
+  }, 33);
+});
