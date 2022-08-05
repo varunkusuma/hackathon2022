@@ -64,9 +64,11 @@ function getFrequency() {
   let req = new XMLHttpRequest();
   req.onreadystatechange = function () {
     if (req.readyState == 4 && req.status == 200) {
-      document.getElementById("frequency_count").innerHTML = JSON.parse(
+      const y = JSON.parse(
         req.responseText
       ).result;
+      const str = checkEyeHealth(y);
+      document.getElementById("frequency_count").innerHTML = y + "- Your Eye health is " + str;
 
       console.log(JSON.parse(req.responseText));
     }
@@ -267,5 +269,29 @@ video.addEventListener("play", () => {
     }
     //ctx.fillText("FPS:"+ (t2-t1), 10, 50);
     t1 = t2;
-  }, 33);
-});
+
+  }, 33)
+  
+  
+  const normalBlink = 15;
+  const abnormalBlink = 25 ;
+  var resultText = "";
+  function checkEyeHealth(EyeBlinkCountFrequency){
+    const x = Number.parseInt(Math.floor(EyeBlinkCountFrequency));
+    if(x<=normalBlink){
+      return "normal"
+    }
+
+    else if(x<=abnormalBlink){
+      return "strained"
+    }
+
+    else if(x>abnormalBlink){
+      return "critical"
+    }
+  }
+  
+
+  
+
+})
