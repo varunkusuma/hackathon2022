@@ -46,6 +46,11 @@ function getFrequency() {
   // document.getElementById("frequency_count").innerHTML =
   //   "Your eye blink frequency is 27 seconds and Your eye health status is Strained!";
 
+  document.getElementById("frequency_count").style.color = "black";
+  document.getElementById("frequency_count").style.textAlign = "center";
+  document.getElementById("frequency_count").style.padding = "15px 32px";
+  document.getElementById("frequency_count").style.backgroundColor = "#e7e7e7";
+  document.getElementById("frequency_count").style.fontWeight = "bold";
   let URL = "/eye_blink_frequency";
   let req = new XMLHttpRequest();
   req.onreadystatechange = () => {

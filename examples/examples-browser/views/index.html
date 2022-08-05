@@ -21,21 +21,42 @@
       canvas {
         position: absolute;
       }
+      .button {
+        background-color: #008cba; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      .button1 {
+        display: flex;
+        flex-direction: column;
+      }
     </style>
   </head>
 
   <body>
-    <video
-      id="video"
-      width="720"
-      height="540"
-      autoplay
-      muted
-      playsinline="true"
-    ></video>
-    <!-- <video id="video"  autoplay muted playsinline="true"></video> -->
-   
-    <button onclick="getFrequency()">Get Frequency</button>
-    <div id="frequency_count"></div>
+    <div style="display: flex; flex-direction: column">
+      <video
+        id="video"
+        width="720"
+        height="540"
+        autoplay
+        muted
+        playsinline="true"
+      ></video>
+      <!-- <video id="video"  autoplay muted playsinline="true"></video> -->
+      <div style="display: flex; flex-direction: row">
+        <button class="button button1" onclick="getFrequency()">
+          Get Frequency
+        </button>
+        <div id="frequency_count"></div>
+      </div>
+    </div>
   </body>
 </html>
